@@ -20,43 +20,48 @@ class ApiResponse extends Response
         private int $encodingOptions = 0,
         array $headers = []
     ) {
-        parent::__construct('', $statusCode, $headers);
-        $this->encodingOptions = $encodingOptions ?? JSON_PRETTY_PRINT;
+        $jsonHeaders = array_merge([
+            'Content-type' => 'application/json'
+        ], $headers);
+        parent::__construct('', $statusCode, $jsonHeaders);
+        $this->encodingOptions = $encodingOptions;
         $this->setThisContent();
     }
 
-    public function message(?string $message): ApiResponse
+    public function message(string $message): ApiResponse
     {
-        if (isset($message)) {
-            $this->message = $message;
-            $this->setThisContent();
-        }
+
+        $this->message = $message;
+        $this->setThisContent();
+
         return $this;
     }
 
-    public function data(array|Arrayable $data = null): ApiResponse
+    public function data(array|Arrayable $data): ApiResponse
     {
-        if (is_null($data)) $this->data = null;
-        else {
-            $this->data = is_array($data) ? $data : $data->toArray();
-            $this->setThisContent();
-        }
+        $this->data = is_array($data) ? $data : $data->toArray();
+        $this->data = $this->$data == [] ? null : $this->$data;
+        $this->setThisContent();
+
         return $this;
     }
 
-    public function meta(?array $meta): ApiResponse
+    public function meta(array $meta): ApiResponse
     {
-        if (isset($meta)) {
-            $this->meta = $meta;
-            $this->setThisContent();
-        }
+        $this->meta = $meta;
+        $this->setThisContent();
+
         return $this;
     }
 
-    public function headers(?array $headers = null): ApiResponse
+    public function headers(array $headers): ApiResponse
     {
-        if ($headers)
-            $this->headers = new ResponseHeaderBag($headers);
+
+        $jsonHeaders = array_merge([
+            'Content-type' => 'application/json'
+        ], $headers);
+
+        $this->headers = new ResponseHeaderBag($jsonHeaders);
 
         return $this;
     }
@@ -72,7 +77,7 @@ class ApiResponse extends Response
             "message" => $this->message ?? $this->getStatusMessage()
         ];
 
-        $response['data'] = $this->data == [] ? null :  $this->data;
+        if ($this->data) $response['data'] = $this->data;
         $response['status'] = [
             "code" => $this->statusCode,
             "message" => $this->getStatusMessage()
