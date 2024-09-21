@@ -9,14 +9,16 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ApiResponse extends Response
 {
 
+    private array|Arrayable $meta;
+
+
+
     public function __construct(
         private ?string $message = null,
         private array|Arrayable $data = [],
-        private ?array $meta = null,
-        private ?string $next = null,
         public int $statusCode = Response::HTTP_OK,
-        array $headers = [],
-        private ?int $encodingOptions = 0,
+        private int $encodingOptions = 0,
+        array $headers = []
     ) {
         parent::__construct('', $statusCode, $headers);
         $this->encodingOptions = $encodingOptions ?? JSON_PRETTY_PRINT;
@@ -51,15 +53,6 @@ class ApiResponse extends Response
         return $this;
     }
 
-    public function next(?string $next): ApiResponse
-    {
-        if (isset($next)) {
-            $this->next = $next;
-            $this->setThisContent();
-        }
-        return $this;
-    }
-
     public function headers(?array $headers = null): ApiResponse
     {
         if ($headers)
@@ -87,8 +80,6 @@ class ApiResponse extends Response
         $response['meta'] = array_merge($this->meta ?? [], [
             "timestamp" => date("Y-m-d H:i:s")
         ]);
-
-        if ($this->next) $response['meta']['next'] = $this->next;
 
         $this->setContent(json_encode($response, $this->encodingOptions));
     }
