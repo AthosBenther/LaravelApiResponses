@@ -1,6 +1,6 @@
 {
     "name": "athosbenther/laravelapiresponses",
-    "description": "A skeleton repository for my packages",
+    "description": "This package is intend to help create standardized JSON responses using Laravel | PHP applications.",
     "keywords": [
         "php",
         "laravel",
