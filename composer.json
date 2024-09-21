@@ -1,0 +1,33 @@
+{
+    "name": "athosbenther/laravelapiresponses",
+    "description": "A skeleton repository for my packages",
+    "keywords": [
+        "php",
+        "laravel",
+        "api",
+        "responses"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Athos Benther",
+            "email": "athos@benther.tech"
+        }
+    ],
+    "require": {
+        "php": "^8.3.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.0.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "AthosBenter\\LaravelApiResponse\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
