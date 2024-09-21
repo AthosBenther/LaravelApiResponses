@@ -17,17 +17,60 @@ trait ApiResponses
      * @param string|null $message The response message. If null, default message for the given status code will be used.
      * @param array|null $data Additional data to include in the response.
      * @param int $jsonEncodingFlags Response JSON Encoding flags
-     * @return Response The HTTP response.
+     * @return ApiResponse The HTTP response.
      */
     public function Response(
         string $message = null,
         array|Arrayable $data = null,
         int $statusCode = Response::HTTP_OK,
         int $jsonEncodingFlags = 0
-    ): Response {
+    ): ApiResponse {
         return new ApiResponse(
             $message,
             $data,
+            $statusCode,
+            $jsonEncodingFlags
+        );
+    }
+
+    /**
+     * Generates a success response.
+     *
+     * @param int $statusCode The HTTP status code.
+     * @param string|null $message The response message. If null, default message for the given status code will be used.
+     * @param array|null $data Additional data to include in the response.
+     * @param int $jsonEncodingFlags Response JSON Encoding flags
+     * @return ApiResponse The HTTP response.
+     */
+    public function MessageResponse(
+        string $message = null,
+        int $statusCode = Response::HTTP_OK,
+        int $jsonEncodingFlags = 0
+    ): ApiResponse {
+        return new ApiResponse(
+            $message,
+            [],
+            $statusCode,
+            $jsonEncodingFlags
+        );
+    }
+
+    /**
+     * Generates a success response.
+     *
+     * @param int $statusCode The HTTP status code.
+     * @param string|null $message The response message. If null, default message for the given status code will be used.
+     * @param array|null $data Additional data to include in the response.
+     * @param int $jsonEncodingFlags Response JSON Encoding flags
+     * @return ApiResponse The HTTP response.
+     */
+    public function StatusCodeResponse(
+        int $statusCode = Response::HTTP_OK,
+        int $jsonEncodingFlags = 0
+    ): ApiResponse {
+        return new ApiResponse(
+            null,
+            [],
             $statusCode,
             $jsonEncodingFlags
         );
@@ -40,7 +83,7 @@ trait ApiResponses
      * @param int $statusCode The HTTP status code.
      * @param bool $trace Indicates if the response should contain the stack trace or not.
      * @param int $jsonEncodingFlags Response JSON Encoding flags
-     * 
+     *
      * @return Response The HTTP response.
      */
     public function ExceptionResponse(
@@ -48,7 +91,7 @@ trait ApiResponses
         int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR,
         bool $trace = false,
         int $jsonEncodingFlags = 0
-    ): Response {
+    ): ApiResponse {
         $data =
             [
                 'code' => $exception->getCode(),
@@ -74,7 +117,7 @@ trait ApiResponses
      *
      * @return Response The HTTP response with status code 501.
      */
-    public function NotImplemented(): Response
+    public function NotImplemented(): ApiResponse
     {
         return $this->Response(null, null, 501);
     }
