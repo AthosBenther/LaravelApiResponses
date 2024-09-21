@@ -20,8 +20,8 @@ trait ApiResponses
      * @return ApiResponse The HTTP response.
      */
     public function Response(
-        string $message = null,
-        array|Arrayable $data = null,
+        ?string $message = null,
+        array|Arrayable $data = [],
         int $statusCode = Response::HTTP_OK,
         int $jsonEncodingFlags = 0
     ): ApiResponse {
@@ -43,7 +43,7 @@ trait ApiResponses
      * @return ApiResponse The HTTP response.
      */
     public function MessageResponse(
-        string $message = null,
+        string $message,
         int $statusCode = Response::HTTP_OK,
         int $jsonEncodingFlags = 0
     ): ApiResponse {
@@ -119,6 +119,6 @@ trait ApiResponses
      */
     public function NotImplemented(): ApiResponse
     {
-        return $this->Response(null, null, 501);
+        return $this->StatusCodeResponse(501);
     }
 }
