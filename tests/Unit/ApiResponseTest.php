@@ -8,7 +8,6 @@ describe('ApiResponse', function () {
 
     $expected = [
         "message" => "OK",
-        "data" => null,
         "status" => [
             "code" => 200,
             "message" => "OK"
