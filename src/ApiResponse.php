@@ -39,8 +39,7 @@ class ApiResponse extends Response
 
     public function data(array|Arrayable $data): ApiResponse
     {
-        $this->data = is_array($data) ? $data : $data->toArray();
-        $this->data = $this->$data == [] ? null : $this->$data;
+        $this->data = $data;
         $this->setThisContent();
 
         return $this;
@@ -77,7 +76,7 @@ class ApiResponse extends Response
             "message" => $this->message ?? $this->getStatusMessage()
         ];
 
-        if ($this->data) $response['data'] = $this->data;
+        if ($this->data) $response['data'] = is_array($this->data) ? $this->data : $this->data->toArray();
         $response['status'] = [
             "code" => $this->statusCode,
             "message" => $this->getStatusMessage()
