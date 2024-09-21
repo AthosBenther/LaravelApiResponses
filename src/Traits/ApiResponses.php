@@ -84,7 +84,7 @@ trait ApiResponses
      * @param bool $trace Indicates if the response should contain the stack trace or not.
      * @param int $jsonEncodingFlags Response JSON Encoding flags
      *
-     * @return Response The HTTP response.
+     * @return ApiResponse The HTTP response.
      */
     public function ExceptionResponse(
         Exception $exception,
@@ -115,7 +115,7 @@ trait ApiResponses
     /**
      * Generates a response for a not implemented feature.
      *
-     * @return Response The HTTP response with status code 501.
+     * @return ApiResponse The HTTP response with status code 501.
      */
     public function NotImplemented(): ApiResponse
     {
