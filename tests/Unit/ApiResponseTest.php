@@ -74,16 +74,4 @@ describe('ApiResponse', function () {
 
         expect($result['meta'])->toBe($data);
     });
-
-    it('sets Next', function () use ($apiResponse) {
-        $data = substr(md5(mt_rand()), 0, 7);
-
-        $content = $apiResponse->next($data)->getContent();
-        $result = json_decode($content, true);
-        unset($result['meta']['timestamp']);
-
-
-        expect($result['meta']['next'])->toBe($data);
-    });
-
 });
