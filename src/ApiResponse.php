@@ -25,14 +25,12 @@ class ApiResponse extends Response
         ], $headers);
         parent::__construct('', $statusCode, $jsonHeaders);
         $this->encodingOptions = $encodingOptions;
-        $this->setThisContent();
     }
 
     public function message(string $message): ApiResponse
     {
 
         $this->message = $message;
-        $this->setThisContent();
 
         return $this;
     }
@@ -40,7 +38,6 @@ class ApiResponse extends Response
     public function data(array|Arrayable $data): ApiResponse
     {
         $this->data = $data;
-        $this->setThisContent();
 
         return $this;
     }
@@ -48,7 +45,6 @@ class ApiResponse extends Response
     public function meta(array $meta): ApiResponse
     {
         $this->meta = $meta;
-        $this->setThisContent();
 
         return $this;
     }
@@ -70,7 +66,7 @@ class ApiResponse extends Response
         return Response::$statusTexts[$this->statusCode];
     }
 
-    private function setThisContent()
+    public function getContent(): string|false
     {
         $response = [
             "message" => $this->message ?? $this->getStatusMessage()
@@ -85,6 +81,6 @@ class ApiResponse extends Response
             "timestamp" => date("Y-m-d H:i:s")
         ]);
 
-        $this->setContent(json_encode($response, $this->encodingOptions));
+        return json_encode($response, $this->encodingOptions);
     }
 }
