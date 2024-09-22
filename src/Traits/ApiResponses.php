@@ -117,7 +117,7 @@ trait ApiResponses
      *
      * @return ApiResponse The HTTP response with status code 501.
      */
-    public function notImplemented(): ApiResponse
+    public function notImplementedResponse(): ApiResponse
     {
         return $this->StatusCodeResponse(501);
     }
