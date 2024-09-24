@@ -29,7 +29,6 @@ class ApiResponse extends Response
 
     public function message(string $message): ApiResponse
     {
-
         $this->message = $message;
 
         return $this;
@@ -82,5 +81,17 @@ class ApiResponse extends Response
         ]);
 
         return json_encode($response, $this->encodingOptions);
+    }
+
+    /**
+     * Sends content for the current web response.
+     *
+     * @return $this
+     */
+    public function sendContent(): static
+    {
+        echo $this->getContent();
+
+        return $this;
     }
 }
