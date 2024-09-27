@@ -1,7 +1,7 @@
 <?php
 
 use AthosBenther\LaravelApiResponses\ApiResponse;
-use AthosBenther\LaravelApiResponses\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
 use Tests\TestCase;
 
 
