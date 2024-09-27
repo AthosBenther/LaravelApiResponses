@@ -1,7 +1,6 @@
 <?php
 
 use AthosBenther\LaravelApiResponses\Traits\ApiResponses;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 describe('ApiResponse', function () {

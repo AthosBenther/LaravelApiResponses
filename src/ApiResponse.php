@@ -2,7 +2,7 @@
 
 namespace AthosBenther\LaravelApiResponses;
 
-use AthosBenther\LaravelApiResponses\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 

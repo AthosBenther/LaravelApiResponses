@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": "^8.3.0",
-        "symfony/http-foundation": "^7.1"
+        "symfony/http-foundation": "^7.1",
+        "illuminate/contracts": "^11.25"
     },
     "require-dev": {
         "pestphp/pest": "^3.0.7"
