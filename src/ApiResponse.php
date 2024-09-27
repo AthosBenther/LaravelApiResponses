@@ -2,16 +2,14 @@
 
 namespace AthosBenther\LaravelApiResponses;
 
+use AthosBenther\LaravelApiResponses\Contracts\Arrayable;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Contracts\Support\Arrayable;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class ApiResponse extends Response
+class ApiResponse extends Response implements Arrayable
 {
 
     private array|Arrayable $meta;
-
-
 
     public function __construct(
         private ?string $message = null,
@@ -67,20 +65,7 @@ class ApiResponse extends Response
 
     public function getContent(): string|false
     {
-        $response = [
-            "message" => $this->message ?? $this->getStatusMessage()
-        ];
-
-        if ($this->data) $response['data'] = is_array($this->data) ? $this->data : $this->data->toArray();
-        $response['status'] = [
-            "code" => $this->statusCode,
-            "message" => $this->getStatusMessage()
-        ];
-        $response['meta'] = array_merge($this->meta ?? [], [
-            "timestamp" => date("Y-m-d H:i:s")
-        ]);
-
-        return json_encode($response, $this->encodingOptions);
+        return json_encode($this->toArray(), $this->encodingOptions);
     }
 
     /**
@@ -93,5 +78,23 @@ class ApiResponse extends Response
         echo $this->getContent();
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        $array = [
+            "message" => $this->message ?? $this->getStatusMessage()
+        ];
+
+        if ($this->data) $array['data'] = is_array($this->data) ? $this->data : $this->data->toArray();
+        $array['status'] = [
+            "code" => $this->statusCode,
+            "message" => $this->getStatusMessage()
+        ];
+        $array['meta'] = array_merge($this->meta ?? [], [
+            "timestamp" => date("Y-m-d H:i:s")
+        ]);
+
+        return $array;
     }
 }
